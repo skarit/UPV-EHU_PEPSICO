@@ -34,5 +34,5 @@ def create_pipeline(**kwargs) -> Pipeline:
         pipe=modeling_pipeline,
         namespace="data_science",
         inputs=["model_input"],
-        outputs=["X_train", "X_test", "y_train"],
+        outputs=["regressor"],
     )

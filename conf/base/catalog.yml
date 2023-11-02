@@ -86,8 +86,17 @@ model_input:
 facts_data:
   type: pandas.ParquetDataSet
   filepath: data/03_primary/facts_data.pq
+  layer: model_input
   metadata:
     kedro-viz:
-      layer: model_input
       preview_args:
           nrows: 5
+
+
+# MODEL OUTPUT
+
+regressor:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/regressor.pickle
+  versioned: true
+  layer: model_output
