@@ -1,0 +1,10 @@
+black~=22.0
+flake8>=3.7.9, <5.0
+kedro~=0.18.13
+kedro-viz==6.6.0
+
+pandas==2.1.1
+numpy==1.26.1
+notebook==7.0.6
+statsmodels==0.14.0
+kedro-datasets[pandas.CSVDataSet, pandas.ExcelDataSet, pandas.ParquetDataSet]~=1.0

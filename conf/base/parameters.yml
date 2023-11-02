@@ -1,0 +1,13 @@
+data_processing:
+    processing_params:
+
+        shipments:
+            fill_method: 'nearest'
+            n_zeros: 12
+            percentile: 0.05
+
+        holidays:
+            test: 1
+
+        promotions:
+            test: 2

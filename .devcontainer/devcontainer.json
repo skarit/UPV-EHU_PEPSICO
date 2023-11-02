@@ -1,0 +1,36 @@
+{
+	"name": "Core engine",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+	
+	"forwardPorts": [4141, 4141],
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-toolsai.jupyter-renderers",
+				"njpwerner.autodocstring"
+			]
+		}
+	},
+
+	"remoteUser": "pepsico",
+	"containerUser": "pepsico",
+	"containerEnv": { "HOME": "/home/pepsico",
+					  "SHELL": "/bin/bash"
+					},
+	"remoteEnv": { "HOME": "/home/pepsico" },
+
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
+
+	"postCreateCommand": "git config --global credential.useHttpPath true && pip install -r src/requirements.txt"
+
+}
