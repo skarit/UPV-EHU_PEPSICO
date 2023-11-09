@@ -35,7 +35,14 @@ def _aggregate_promo(df: pd.DataFrame,
     
     return df
 
+def _drop_columns(df: pd.DataFrame, columns = List[str]) -> pd.DataFrame:
+    for column in columns:
+        df = df.drop(column, axis=1)
+    
+    return df
+
 def _clean_promo_output(df: pd.DataFrame) -> pd.DataFrame:
+    df = _drop_columns(df, ["None", "promo_type", "promo_type_aggregated"])
     df = df.dropna()
     df = df.reset_index(drop=True)
     return df
@@ -59,6 +66,9 @@ def feature_promotions(promotions_processed: pd.DataFrame) -> pd.DataFrame:
                                             "promo_type_aggregated", 
                                             "d", 
                                             "discount")
+    
+    promotions_processed = _generate_dicotomic_features(promotions_processed, "promo_type_aggregated")
+    
     promotions_processed = _clean_promo_output(promotions_processed)
 
     return promotions_processed
