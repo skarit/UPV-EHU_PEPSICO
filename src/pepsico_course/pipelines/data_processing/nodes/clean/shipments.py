@@ -93,7 +93,7 @@ def _remove_continuous_zeros(shipments: pd.DataFrame, n_zeros: int) -> pd.DataFr
 
 def _winsorize(df: pd.DataFrame, threshold: float) -> pd.DataFrame:
     """
-    Decompose tthe input DataFrame using STL and then winsorizing the residuals 
+    Decompose the input DataFrame using STL and then winsorizing the residuals 
 
     https://en.wikipedia.org/wiki/Winsorizing
 
@@ -149,7 +149,7 @@ def _outlier_removal(shipments: pd.DataFrame, percentile: int) -> pd.DataFrame:
     changed = len(shipments[shipments['shipments'] != shipments['new_shipments']])
     log.info(f'Changed {changed}/{len(shipments)} points')
     shipments = shipments.drop('shipments', axis=1)
-    shipments = shipments.rename({'new_shipments': 'shipments'})
+    shipments = shipments.rename(columns={'new_shipments': 'shipments'})
     return shipments
 
 def clean_shipments(shipments: pd.DataFrame, parameters: Dict) -> pd.DataFrame:
