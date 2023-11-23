@@ -95,8 +95,12 @@ facts_data:
 
 # MODEL OUTPUT
 
-regressor:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/regressor.pickle
-  versioned: true
+arima_results:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/arima_results.csv
+  layer: model_output
+
+ml_results:
+  type: pandas.CSVDataset
+  filepath: data/07_model_output/ml_results.csv
   layer: model_output

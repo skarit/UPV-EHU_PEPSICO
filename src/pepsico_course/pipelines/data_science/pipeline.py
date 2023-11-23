@@ -1,7 +1,7 @@
 from kedro.pipeline import Pipeline, node
 from kedro.pipeline.modular_pipeline import pipeline
 
-from .nodes.modeling.modeling import split_data, train_model, evaluate_model
+from .nodes.modeling.modeling import time_series_approach, ml_approach
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -10,22 +10,23 @@ def create_pipeline(**kwargs) -> Pipeline:
     modeling_pipeline = pipeline(
         [
             node(
-                func=split_data,
-                inputs=["model_input", "params:model_options"],
-                outputs=["X_train", "X_test", "y_train", "y_test"],
-                name="split_data_node",
+                func=time_series_approach,
+                # inputs=["model_input", "params:arima_model_options"],
+                inputs=["model_input", "params:general_options.horizon",
+                        "params:arima_model_options.order" , "params:general_options.time_var",
+                        "params:general_options.primary_key", "params:general_options.y_hat",
+                        "params:general_options.target_var", "params:arima_model_options.seasonal_order",
+                        "params:arima_model_options.trend"],
+                outputs="arima_results",
+                name="arima_node",
             ),
             node(
-                func=train_model,
-                inputs=["X_train", "y_train"],
-                outputs="regressor",
-                name="train_model_node",
-            ),
-            node(
-                func=evaluate_model,
-                inputs=["regressor", "X_test", "y_test"],
-                outputs=None,
-                name="evaluate_model_node",
+                func=ml_approach,
+                inputs=["model_input", "params:general_options.horizon","params:general_options.time_var",
+                        "params:general_options.target_var","params:general_options.primary_key",
+                        "params:general_options.y_hat", "params:lgb_model_options"],
+                outputs="ml_results",
+                name="ml_node",
             ),
         ]
     )
@@ -34,5 +35,5 @@ def create_pipeline(**kwargs) -> Pipeline:
         pipe=modeling_pipeline,
         namespace="data_science",
         inputs=["model_input"],
-        outputs=["regressor"],
+        outputs=["arima_results", "ml_results"],
     )

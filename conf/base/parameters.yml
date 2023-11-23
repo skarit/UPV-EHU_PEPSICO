@@ -14,7 +14,24 @@ data_processing:
 
 
 data_science:
-    model_options:
-        features: None
-        test_size: 0.2
-        random_state: 42
+    general_options:
+        time_var: time_var
+        target_var: shipments
+        primary_key:  model_id #grouping key
+        horizon: 20
+        y_hat: y_hat
+
+    arima_model_options:
+        order: [1, 1, 1]
+        seasonal_order: [1,1,1,2]
+        trend: c
+
+    lgb_model_options:
+        task: train
+        boosting': gbdt
+        objective': regression
+        num_leaves': 10
+        learning_rate: 0.05
+        metric: ['l2','l1']
+        verbose: -1
+        
